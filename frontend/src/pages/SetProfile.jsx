@@ -165,7 +165,7 @@ const SetProfile = () => {
         backgroundImage: `url('/images/bg.jpg')`
       }}
     >
-      <div className="w-full max-w-full lg:max-w-7xl h-full min-h-0 max-h-[calc(100vh-1rem)] xs:max-h-[calc(100vh-1.5rem)] sm:max-h-[calc(100vh-2rem)] grid grid-cols-1 grid-rows-[minmax(0,1fr)_minmax(200px,1fr)] lg:grid-rows-1 lg:grid-cols-2 gap-2 xs:gap-3 sm:gap-4 overflow-hidden min-w-0">
+      <div className="w-full max-w-full md:max-w-6xl lg:max-w-7xl h-full min-h-0 max-h-[calc(100vh-1rem)] xs:max-h-[calc(100vh-1.5rem)] sm:max-h-[calc(100vh-2rem)] grid grid-cols-2 grid-rows-1 gap-2 xs:gap-3 sm:gap-4 overflow-hidden min-w-0">
         {/* Left Panel - Profile Details */}
         <div 
           className="rounded-lg p-2 xs:p-3 sm:p-4 shadow-2xl flex flex-col min-h-0 overflow-y-auto overflow-x-hidden min-w-0 max-w-full"
@@ -175,17 +175,17 @@ const SetProfile = () => {
           }}
         >
           <h2 
-            className="text-lg xs:text-xl font-bold mb-2 sm:mb-3 text-center flex-shrink-0"
+            className="text-base xs:text-lg sm:text-xl font-bold mb-1.5 xs:mb-2 sm:mb-3 text-center flex-shrink-0"
             style={{ color: 'white' }}
           >
             {t('setProfile_profile')}
           </h2>
 
           {/* Avatar Preview */}
-          <div className="flex justify-center mb-2 sm:mb-3 flex-shrink-0">
+          <div className="flex justify-center mb-1.5 xs:mb-2 sm:mb-3 flex-shrink-0">
             <div className="relative">
               <div 
-                className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden border-2"
+                className="w-14 h-14 xs:w-16 xs:h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden border-2"
                 style={{ 
                   borderColor: getSelectedAvatarColor(),
                   backgroundColor: getSelectedAvatarColor()
@@ -217,7 +217,7 @@ const SetProfile = () => {
           </div>
 
           {/* Profile Fields */}
-          <div className="flex-1 min-h-0 flex flex-col justify-between py-1 gap-1 sm:gap-0">
+          <div className="flex-1 min-h-0 flex flex-col justify-between py-0.5 xs:py-1 gap-0.5 xs:gap-1 sm:gap-0">
             {/* Username */}
             <div className="flex flex-col justify-center flex-1 min-h-0 min-w-0">
               <label 
@@ -323,11 +323,11 @@ const SetProfile = () => {
           )}
 
           {/* Action Buttons */}
-          <div className="flex flex-col xs:flex-row gap-2 sm:gap-3 mt-3 flex-shrink-0">
+          <div className="flex flex-col xs:flex-row gap-1.5 xs:gap-2 sm:gap-3 mt-2 xs:mt-3 flex-shrink-0">
             <button
               onClick={handleSave}
               disabled={loading}
-              className="flex-1 py-2.5 px-4 rounded-lg font-bold text-sm text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px] touch-manipulation"
+              className="flex-1 py-2 xs:py-2.5 px-3 xs:px-4 rounded-lg font-bold text-xs xs:text-sm text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-[40px] xs:min-h-[44px] touch-manipulation"
               style={{ backgroundColor: '#8B7355' }}
             >
               {loading ? t('setProfile_saving') : t('setProfile_save')}
@@ -335,7 +335,7 @@ const SetProfile = () => {
             <button
               onClick={handleDiscard}
               disabled={loading}
-              className="flex-1 py-2.5 px-4 rounded-lg font-bold text-sm text-gray-700 transition-colors bg-gray-300 hover:bg-gray-400 disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px] touch-manipulation"
+              className="flex-1 py-2 xs:py-2.5 px-3 xs:px-4 rounded-lg font-bold text-xs xs:text-sm text-gray-700 transition-colors bg-gray-300 hover:bg-gray-400 disabled:opacity-50 disabled:cursor-not-allowed min-h-[40px] xs:min-h-[44px] touch-manipulation"
             >
               {t('setProfile_discard')}
             </button>
@@ -351,9 +351,9 @@ const SetProfile = () => {
           }}
         >
           {/* Header */}
-          <div className="relative flex justify-center items-center mb-1.5 sm:mb-2 flex-shrink-0 min-w-0">
+          <div className="relative flex justify-center items-center mb-1 xs:mb-1.5 sm:mb-2 flex-shrink-0 min-w-0 h-9 xs:h-10">
             <h2 
-              className="text-base xs:text-lg sm:text-xl font-bold text-center truncate"
+              className="text-sm xs:text-base sm:text-xl font-bold text-center truncate px-8"
               style={{ color: 'white' }}
             >
               {t('setProfile_avatars')}
@@ -361,7 +361,7 @@ const SetProfile = () => {
             <button
               type="button"
               onClick={handleClose}
-              className="absolute right-0 top-1/2 -translate-y-1/2 text-red-500 hover:text-red-700 text-lg sm:text-xl p-1.5 touch-manipulation min-w-[36px] min-h-[36px] xs:min-w-[44px] xs:min-h-[44px] flex items-center justify-center flex-shrink-0"
+              className="absolute right-0 top-1/2 -translate-y-1/2 text-red-500 hover:text-red-700 text-base sm:text-xl p-1 touch-manipulation min-w-[32px] min-h-[32px] xs:min-w-[40px] xs:min-h-[40px] flex items-center justify-center flex-shrink-0 rounded"
             >
               <FaTimes />
             </button>
