@@ -38,17 +38,17 @@ const StudentHome = () => {
 
   return (
     <div 
-      className="min-h-screen w-full flex flex-col items-center justify-center relative text-white p-0 overflow-x-hidden bg-cover bg-center bg-no-repeat"
+      className="min-h-screen w-full max-w-[100vw] flex flex-col items-center justify-center relative text-white p-0 overflow-x-hidden bg-cover bg-center bg-no-repeat box-border"
       style={{
         backgroundImage: `url('/images/bg.jpg')`,
         fontFamily: '"Poppins", sans-serif'
       }}
     >
-      {/* Header - responsive: compact on mobile, full on tablet+ */}
-      <header className="absolute top-0 left-0 right-0 flex justify-between items-center gap-2 sm:gap-3 p-2 sm:p-3 md:p-4 bg-transparent z-10 w-full max-w-[100vw]">
-        <div className="flex items-center pl-2 sm:pl-3 flex-shrink-0 min-w-0">
+      {/* Header - icon-only below 640px to avoid overflow at 375/425px */}
+      <header className="absolute top-0 left-0 right-0 flex justify-between items-center gap-1.5 sm:gap-3 p-2 sm:p-3 md:p-4 bg-transparent z-10 w-full max-w-[100vw] min-w-0 box-border">
+        <div className="flex items-center pl-1 sm:pl-3 flex-shrink-0 min-w-0 overflow-hidden">
           <h1 
-            className="text-lg xs:text-xl sm:text-2xl font-bold text-white uppercase whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px] xs:max-w-[140px] sm:max-w-none"
+            className="text-base xs:text-lg sm:text-2xl font-bold text-white uppercase truncate max-w-[90px] xs:max-w-[110px] sm:max-w-none"
             style={{
               textShadow: '2px 2px 4px rgba(0, 0, 0, 1)'
             }}
@@ -56,38 +56,38 @@ const StudentHome = () => {
             {t('common_student')}
           </h1>
         </div>
-        <div className="flex gap-2 sm:gap-3 md:gap-4 items-center justify-end pr-2 sm:pr-3 flex-wrap flex-shrink-0">
-          {/* PROFILE Button */}
+        <div className="flex gap-1.5 sm:gap-3 md:gap-4 items-center justify-end pr-1 sm:pr-3 flex-shrink-0 min-w-0">
+          {/* PROFILE Button - text visible from sm (640px) up */}
           <button 
             onClick={handleProfileClick}
-            className="flex items-center gap-1 sm:gap-1.5 px-2.5 py-2 sm:px-4 sm:py-2.5 bg-[#768e50] rounded-lg cursor-pointer transition-all duration-200 border-2 border-black min-h-[40px] sm:min-h-[44px] touch-manipulation hover:bg-[#8b7745] hover:scale-105 active:scale-[0.98]"
+            className="flex items-center justify-center gap-1 sm:gap-1.5 p-2 sm:px-4 sm:py-2.5 bg-[#768e50] rounded-lg cursor-pointer transition-all duration-200 border-2 border-black min-h-[40px] min-w-[40px] sm:min-w-0 sm:min-h-[44px] touch-manipulation hover:bg-[#8b7745] hover:scale-105 active:scale-[0.98]"
           >
             <FaUserCircle className="text-base sm:text-lg text-white flex-shrink-0" />
-            <span className="text-sm sm:text-base font-bold text-white whitespace-nowrap hidden xs:inline">{t('common_profile')}</span>
+            <span className="text-sm sm:text-base font-bold text-white whitespace-nowrap hidden sm:inline">{t('common_profile')}</span>
           </button>
 
           {/* SETTINGS Button */}
           <button 
             onClick={handleSettingsClick}
-            className="flex items-center gap-1 sm:gap-1.5 px-2.5 py-2 sm:px-4 sm:py-2.5 bg-[#768e50] rounded-lg cursor-pointer transition-all duration-200 border-2 border-black min-h-[40px] sm:min-h-[44px] touch-manipulation hover:bg-[#8b7745] hover:scale-105 active:scale-[0.98]"
+            className="flex items-center justify-center gap-1 sm:gap-1.5 p-2 sm:px-4 sm:py-2.5 bg-[#768e50] rounded-lg cursor-pointer transition-all duration-200 border-2 border-black min-h-[40px] min-w-[40px] sm:min-w-0 sm:min-h-[44px] touch-manipulation hover:bg-[#8b7745] hover:scale-105 active:scale-[0.98]"
           >
             <FaCog className="text-base sm:text-lg text-white flex-shrink-0" />
-            <span className="text-sm sm:text-base font-bold text-white whitespace-nowrap hidden xs:inline">{t('common_settings')}</span>
+            <span className="text-sm sm:text-base font-bold text-white whitespace-nowrap hidden sm:inline">{t('common_settings')}</span>
           </button>
 
           {/* LOGOUT Button */}
           <button 
             onClick={handleLogout}
-            className="flex items-center gap-1 sm:gap-1.5 px-2.5 py-2 sm:px-4 sm:py-2.5 bg-[#768e50] rounded-lg cursor-pointer transition-all duration-200 border-2 border-black min-h-[40px] sm:min-h-[44px] touch-manipulation hover:bg-[#8b7745] hover:scale-105 active:scale-[0.98]"
+            className="flex items-center justify-center gap-1 sm:gap-1.5 p-2 sm:px-4 sm:py-2.5 bg-[#768e50] rounded-lg cursor-pointer transition-all duration-200 border-2 border-black min-h-[40px] min-w-[40px] sm:min-w-0 sm:min-h-[44px] touch-manipulation hover:bg-[#8b7745] hover:scale-105 active:scale-[0.98]"
           >
             <FaSignOutAlt className="text-base sm:text-lg text-white flex-shrink-0" />
-            <span className="text-sm sm:text-base font-bold text-white whitespace-nowrap hidden xs:inline">{t('common_logout')}</span>
+            <span className="text-sm sm:text-base font-bold text-white whitespace-nowrap hidden sm:inline">{t('common_logout')}</span>
           </button>
         </div>
       </header>
 
       {/* Main Action Buttons - responsive: stack on mobile, side-by-side on tablet+ */}
-      <main className="flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-8 md:gap-10 px-4 xs:px-5 sm:px-6 md:px-8 w-full max-w-[520px] lg:max-w-[600px] mx-auto text-center min-h-screen pt-20 sm:pt-24 pb-8">
+      <main className="flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-8 md:gap-10 px-4 xs:px-5 sm:px-6 md:px-8 w-full max-w-[100vw] sm:max-w-[520px] lg:max-w-[600px] mx-auto text-center min-h-screen pt-20 sm:pt-24 pb-8 box-border">
         {/* JOIN CLASS Button */}
         <button 
           onClick={handleJoinClassClick}
