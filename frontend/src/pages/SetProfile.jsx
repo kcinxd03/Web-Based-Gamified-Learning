@@ -160,15 +160,15 @@ const SetProfile = () => {
 
   return (
     <div 
-      className="min-h-screen h-screen overflow-auto bg-cover bg-center bg-no-repeat flex items-center justify-center p-3 xs:p-4 sm:p-4 md:p-5 overflow-x-hidden"
+      className="min-h-screen h-screen overflow-auto bg-cover bg-center bg-no-repeat flex items-center justify-center p-2 xs:p-3 sm:p-4 md:p-5 overflow-x-hidden max-w-[100vw] box-border"
       style={{
         backgroundImage: `url('/images/bg.jpg')`
       }}
     >
-      <div className="w-full max-w-7xl h-full min-h-0 max-h-[calc(100vh-1.5rem)] sm:max-h-[calc(100vh-2rem)] grid grid-cols-1 grid-rows-[auto_1fr] lg:grid-rows-1 lg:grid-cols-2 gap-3 sm:gap-4 overflow-hidden">
+      <div className="w-full max-w-full lg:max-w-7xl h-full min-h-0 max-h-[calc(100vh-1rem)] xs:max-h-[calc(100vh-1.5rem)] sm:max-h-[calc(100vh-2rem)] grid grid-cols-1 grid-rows-[minmax(0,1fr)_minmax(200px,1fr)] lg:grid-rows-1 lg:grid-cols-2 gap-2 xs:gap-3 sm:gap-4 overflow-hidden min-w-0">
         {/* Left Panel - Profile Details */}
         <div 
-          className="rounded-lg p-3 xs:p-4 sm:p-4 shadow-2xl flex flex-col min-h-0 overflow-y-auto overflow-x-hidden"
+          className="rounded-lg p-2 xs:p-3 sm:p-4 shadow-2xl flex flex-col min-h-0 overflow-y-auto overflow-x-hidden min-w-0 max-w-full"
           style={{
             backgroundColor: '#778F51',
             border: '2px solid #8B7355'
@@ -219,19 +219,19 @@ const SetProfile = () => {
           {/* Profile Fields */}
           <div className="flex-1 min-h-0 flex flex-col justify-between py-1 gap-1 sm:gap-0">
             {/* Username */}
-            <div className="flex flex-col justify-center flex-1 min-h-0">
+            <div className="flex flex-col justify-center flex-1 min-h-0 min-w-0">
               <label 
                 className="block text-xs font-bold mb-1"
                 style={{ color: 'white' }}
               >
                 {t('setProfile_username')}
               </label>
-              <div className="relative">
+              <div className="relative min-w-0">
                 <input
                   type="text"
                   value={profileData.username}
                   onChange={(e) => setProfileData({ ...profileData, username: e.target.value })}
-                  className="w-full px-3 py-2 xs:py-2.5 text-sm rounded-lg border-2 bg-white min-h-[40px]"
+                  className="w-full min-w-0 px-2 xs:px-3 py-2 xs:py-2.5 text-sm rounded-lg border-2 bg-white min-h-[40px] box-border"
                   style={{ borderColor: '#8B7355' }}
                 />
                 <button
@@ -245,7 +245,7 @@ const SetProfile = () => {
             </div>
 
             {/* Full Name */}
-            <div className="flex flex-col justify-center flex-1 min-h-0">
+            <div className="flex flex-col justify-center flex-1 min-h-0 min-w-0">
               <label 
                 className="block text-xs font-bold mb-1"
                 style={{ color: 'white' }}
@@ -253,7 +253,7 @@ const SetProfile = () => {
                 {t('setProfile_fullName')}
               </label>
               <div 
-                className="w-full px-3 py-2 xs:py-2.5 text-sm rounded-lg border-2 bg-white min-h-[40px] flex items-center"
+                className="w-full min-w-0 px-2 xs:px-3 py-2 xs:py-2.5 text-sm rounded-lg border-2 bg-white min-h-[40px] flex items-center box-border"
                 style={{ borderColor: '#8B7355', color: '#000000' }}
               >
                 {profileData.fullName}
@@ -261,7 +261,7 @@ const SetProfile = () => {
             </div>
 
             {/* Gender */}
-            <div className="flex flex-col justify-center flex-1 min-h-0">
+            <div className="flex flex-col justify-center flex-1 min-h-0 min-w-0">
               <label 
                 className="block text-xs font-bold mb-1"
                 style={{ color: 'white' }}
@@ -269,7 +269,7 @@ const SetProfile = () => {
                 {t('setProfile_gender')}
               </label>
               <div 
-                className="w-full px-3 py-2 xs:py-2.5 text-sm rounded-lg border-2 bg-white min-h-[40px] flex items-center"
+                className="w-full min-w-0 px-2 xs:px-3 py-2 xs:py-2.5 text-sm rounded-lg border-2 bg-white min-h-[40px] flex items-center box-border"
                 style={{ borderColor: '#8B7355', color: '#000000' }}
               >
                 {profileData.gender}
@@ -277,38 +277,38 @@ const SetProfile = () => {
             </div>
 
             {/* Grade Level */}
-            <div className="flex flex-col justify-center flex-1 min-h-0">
+            <div className="flex flex-col justify-center flex-1 min-h-0 min-w-0">
               <label 
                 className="block text-xs font-bold mb-1"
                 style={{ color: 'white' }}
               >
                 {t('setProfile_gradeLevel')}
               </label>
-              <div className="relative">
+              <div className="relative min-w-0">
                 <input
                   type="text"
                   readOnly
                   value={profileData.gradeLevel}
-                  className="w-full px-3 py-2 xs:py-2.5 text-sm rounded-lg border-2 bg-white min-h-[40px]"
+                  className="w-full min-w-0 px-2 xs:px-3 py-2 xs:py-2.5 text-sm rounded-lg border-2 bg-white min-h-[40px] box-border"
                   style={{ borderColor: '#8B7355', color: '#000000' }}
                 />
               </div>
             </div>
 
             {/* Section */}
-            <div className="flex flex-col justify-center flex-1 min-h-0">
+            <div className="flex flex-col justify-center flex-1 min-h-0 min-w-0">
               <label 
                 className="block text-xs font-bold mb-1"
                 style={{ color: 'white' }}
               >
                 {t('setProfile_section')}
               </label>
-              <div className="relative">
+              <div className="relative min-w-0">
                 <input
                   type="text"
                   readOnly
                   value={profileData.section}
-                  className="w-full px-3 py-2 xs:py-2.5 text-sm rounded-lg border-2 bg-white min-h-[40px]"
+                  className="w-full min-w-0 px-2 xs:px-3 py-2 xs:py-2.5 text-sm rounded-lg border-2 bg-white min-h-[40px] box-border"
                   style={{ borderColor: '#8B7355', color: '#000000' }}
                 />
               </div>
@@ -344,16 +344,16 @@ const SetProfile = () => {
 
         {/* Right Panel - AVATARS */}
         <div 
-          className="rounded-lg p-3 xs:p-4 sm:p-4 shadow-2xl flex flex-col min-h-0 overflow-hidden"
+          className="rounded-lg p-2 xs:p-3 sm:p-4 shadow-2xl flex flex-col min-h-0 overflow-hidden min-w-0 max-w-full"
           style={{
             backgroundColor: '#778F51',
             border: '2px solid #8B7355'
           }}
         >
           {/* Header */}
-          <div className="relative flex justify-center items-center mb-2 sm:mb-3 flex-shrink-0">
+          <div className="relative flex justify-center items-center mb-1.5 sm:mb-2 flex-shrink-0 min-w-0">
             <h2 
-              className="text-lg xs:text-xl font-bold text-center"
+              className="text-base xs:text-lg sm:text-xl font-bold text-center truncate"
               style={{ color: 'white' }}
             >
               {t('setProfile_avatars')}
@@ -361,30 +361,29 @@ const SetProfile = () => {
             <button
               type="button"
               onClick={handleClose}
-              className="absolute right-0 top-0 text-red-500 hover:text-red-700 text-lg sm:text-xl p-2 -m-2 touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className="absolute right-0 top-1/2 -translate-y-1/2 text-red-500 hover:text-red-700 text-lg sm:text-xl p-1.5 touch-manipulation min-w-[36px] min-h-[36px] xs:min-w-[44px] xs:min-h-[44px] flex items-center justify-center flex-shrink-0"
             >
               <FaTimes />
             </button>
           </div>
 
-          {/* Avatar Grid - 4 cols on small, 5 on sm+ */}
+          {/* Avatar Grid - 3 cols at 320px, 4 at 375+, 5 at 640+ */}
           <div 
-            className="grid grid-cols-4 sm:grid-cols-5 gap-1.5 sm:gap-2 min-h-0 flex-1 overflow-y-auto"
-            style={{ gridAutoRows: 'minmax(0,1fr)' }}
+            className="grid grid-cols-3 xs:grid-cols-4 sm:grid-cols-5 gap-1 xs:gap-1.5 sm:gap-2 min-h-0 flex-1 overflow-y-auto overflow-x-hidden content-start"
           >
             {avatars.map((avatar) => (
               <div
                 key={avatar.name}
                 onClick={() => handleAvatarSelect(avatar.name)}
-                className={`flex flex-col items-center justify-center cursor-pointer p-0.5 sm:p-1 rounded-lg transition-all min-h-0 touch-manipulation ${
+                className={`flex flex-col items-center justify-center cursor-pointer p-0.5 sm:p-1 rounded-lg transition-all min-h-0 min-w-0 touch-manipulation ${
                   selectedAvatar === avatar.name.toLowerCase() && !customImage
                     ? 'bg-yellow-200 ring-2 ring-yellow-500'
                     : ''
                 }`}
               >
-                <div className="flex-1 min-h-0 flex items-center justify-center w-full">
+                <div className="flex items-center justify-center w-full min-w-0 flex-shrink-0">
                   <div 
-                    className="w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 min-w-[2.5rem] min-h-[2.5rem] sm:min-w-12 sm:min-h-12 aspect-square rounded-full overflow-hidden border-2 border-gray-400 flex-shrink-0"
+                    className="w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12 aspect-square rounded-full overflow-hidden border-2 border-gray-400 flex-shrink-0"
                     style={{ backgroundColor: getAvatarBgColor(avatar.name) }}
                   >
                     <img 
@@ -395,7 +394,7 @@ const SetProfile = () => {
                   </div>
                 </div>
                 <span 
-                  className="text-[10px] xs:text-xs sm:text-sm font-semibold text-center w-full leading-tight flex-shrink-0 drop-shadow-md truncate"
+                  className="text-[9px] xs:text-[10px] sm:text-sm font-semibold text-center w-full leading-tight flex-shrink-0 drop-shadow-md truncate min-w-0 mt-0.5"
                   style={{ color: 'white', textShadow: '0 1px 2px rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,0.4)' }}
                 >
                   {avatar.name}
