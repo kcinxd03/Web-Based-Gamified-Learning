@@ -139,11 +139,11 @@ class GameScene extends Phaser.Scene {
     this.load.image('temple-map', '/Maps/Temple.png');
     this.load.tilemapTiledJSON('temple-map-data', '/Maps/Temple.json');
     this.load.image('temple-foreground', '/images/Temple-Foreground.png');
-    this.load.spritesheet('player', '/Characters/player/adam_idle.png', {
+    this.load.spritesheet('player', '/Characters/player/Adam_idle.png', {
       frameWidth: PLAYER_FRAME_WIDTH,
       frameHeight: PLAYER_FRAME_HEIGHT,
     });
-    this.load.spritesheet('player-run', '/Characters/player/adam_run.png', {
+    this.load.spritesheet('player-run', '/Characters/player/Adam_run.png', {
       frameWidth: PLAYER_FRAME_WIDTH,
       frameHeight: PLAYER_FRAME_HEIGHT,
     });
