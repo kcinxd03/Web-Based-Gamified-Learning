@@ -4,7 +4,7 @@
  "layers":[
         {
          "id":2,
-         "image":"..\/..\/..\/..\/..\/Users\/nicka\/OneDrive\/Documents\/Map\/Farm-2.png",
+         "image":"Farm-2.png",
          "imageheight":768,
          "imagewidth":1376,
          "name":"Farm Image",
@@ -3039,7 +3039,7 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":123.716,
+                 "width":134.685696969697,
                  "x":1034.38,
                  "y":333.823
                 }, 
@@ -3262,6 +3262,83 @@
                  "width":229.403778102995,
                  "x":169.460197617287,
                  "y":454.745627979448
+                }, 
+                {
+                 "height":101.653463636364,
+                 "id":337,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":33.9121027667984,
+                 "x":1044.07,
+                 "y":388.469
+                }, 
+                {
+                 "height":212.86085,
+                 "id":338,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":70.0873333333332,
+                 "x":1077.82852272727,
+                 "y":363.659340909091
+                }, 
+                {
+                 "height":134.829136363636,
+                 "id":340,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":44.4121,
+                 "x":1148.07,
+                 "y":423.6565
+                }, 
+                {
+                 "height":19.6521739130435,
+                 "id":341,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":15.5597826086955,
+                 "x":1141.20923913043,
+                 "y":547.975543478261
+                }, 
+                {
+                 "height":34.25,
+                 "id":343,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":12,
+                 "x":1192.625,
+                 "y":502.5
+                }, 
+                {
+                 "height":69.6363636363636,
+                 "id":344,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":23.090909090909,
+                 "x":1168.90909090909,
+                 "y":340.181818181818
+                }, 
+                {
+                 "height":2.45454545454544,
+                 "id":345,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":25.5454545454545,
+                 "x":1146,
+                 "y":407.363636363636
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -3270,7 +3347,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":337,
+ "nextobjectid":346,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
