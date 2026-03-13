@@ -23,7 +23,7 @@ export const SocketProvider = ({ children }) => {
   useEffect(() => {
     if (user) {
       // Create socket connection
-      const newSocket = io(API_URL, {
+      const newSocket = io(SOCKET_URL, {
         transports: ['websocket', 'polling'],
         withCredentials: true
       });
