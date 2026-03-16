@@ -8,7 +8,6 @@ import {
   FaTrophy, 
   FaUsers, 
   FaUser, 
-  FaSignOutAlt,
   FaTrash,
   FaClipboardList,
   FaTimes
@@ -35,6 +34,8 @@ const Classroom = () => {
   const [gameViewKey, setGameViewKey] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showLeaderboardGain, setShowLeaderboardGain] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deletingClass, setDeletingClass] = useState(false);
 
   // Get class data and activeNav from navigation state
   useEffect(() => {
@@ -98,48 +99,24 @@ const Classroom = () => {
     }
   };
 
-  const handleLeaveClassroom = async () => {
-    const classId = classData?.id ?? classData?._id;
-    if (!classData || !classId) {
-      alert('Class data is missing. Please try again.');
-      return;
-    }
-    if (user?.accountType !== 'STUDENT') {
-      navigate('/my-class');
-      return;
-    }
-    const confirmMessage = 'Leave this classroom? All your progress in this class (scores, leaderboard) will be removed. This cannot be undone.';
-    if (!window.confirm(confirmMessage)) return;
-    try {
-      await classAPI.leaveClass(classId);
-      alert('You have left the class. Your progress in this classroom has been removed.');
-      navigate('/my-class');
-    } catch (err) {
-      console.error('Error leaving classroom:', err);
-      alert(err.response?.data?.message || 'Failed to leave classroom. Please try again.');
-    }
+  const handleDeleteClassroom = async () => {
+    if (!classData?.id && !classData?._id) return;
+    setShowDeleteModal(true);
   };
 
-  const handleDeleteClassroom = async () => {
+  const confirmDeleteClassroom = async () => {
     const classId = classData?.id ?? classData?._id;
-    if (!classData || !classId) {
-      alert('Class data is missing. Please try again.');
-      return;
-    }
-
-    const confirmMessage = `Are you sure you want to delete this classroom?\n\nSubject: ${classData.subject}\nGrade Level: ${classData.gradeLevel}\nSection: ${classData.section}\n\nThis will permanently delete the classroom, all quizzes, and game sessions. This action cannot be undone.`;
-
-    if (!window.confirm(confirmMessage)) {
-      return;
-    }
-
+    if (!classData || !classId) return;
+    setDeletingClass(true);
     try {
       await classAPI.deleteClass(classId);
-      alert('Classroom deleted successfully');
-      navigate('/my-class');
+      setShowDeleteModal(false);
+      navigate('/my-class', { replace: true });
     } catch (err) {
       console.error('Error deleting classroom:', err);
-      alert(err.response?.data?.message || 'Failed to delete classroom. Please try again.');
+      setShowDeleteModal(false);
+    } finally {
+      setDeletingClass(false);
     }
   };
 
@@ -347,7 +324,7 @@ const Classroom = () => {
               </button>
             </>
           ) : (
-            // Student Sidebar Navigation
+            // Student Sidebar Navigation (no Leave Classroom button)
             <>
               <button
                 onClick={() => { handleNavClick('classroom'); setSidebarOpen(false); }}
@@ -385,13 +362,6 @@ const Classroom = () => {
                 <FaUsers className="text-white flex-shrink-0" size={18} />
                 <span className="text-white font-bold text-sm sm:text-base text-left">{t('classroom_classmates')}</span>
               </button>
-              <button
-                onClick={handleLeaveClassroom}
-                className="w-full flex items-center gap-2 sm:gap-3 px-3 py-2.5 sm:px-4 sm:py-3 rounded-lg transition-colors hover:bg-red-600 mt-2 sm:mt-4 justify-start touch-manipulation min-h-[44px]"
-              >
-                <FaSignOutAlt className="text-white flex-shrink-0" size={18} />
-                <span className="text-white font-bold text-sm sm:text-base text-left">{t('classroom_leaveClassroom')}</span>
-              </button>
             </>
           )}
         </nav>
@@ -422,6 +392,39 @@ const Classroom = () => {
           <div className="p-4 sm:p-6 md:p-8 text-white text-sm sm:text-base">{t('classroom_loadingClassroom')}</div>
         )}
       </div>
+      {/* Delete classroom confirmation modal (teacher only) */}
+      {user?.accountType === 'TEACHER' && showDeleteModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
+          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-5 sm:p-6 border-2 border-red-300">
+            <h2 className="text-lg sm:text-xl font-bold mb-3 text-gray-900">
+              Delete Classroom?
+            </h2>
+            <p className="text-sm sm:text-base text-gray-700 mb-4">
+              This will permanently delete this classroom and all of its associated data
+              (quizzes, game sessions, and leaderboards). Students will no longer have access.
+              This action cannot be undone.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-2 mt-2">
+              <button
+                type="button"
+                onClick={confirmDeleteClassroom}
+                disabled={deletingClass}
+                className="flex-1 min-h-[44px] px-4 py-2.5 rounded-lg font-bold text-white bg-red-600 hover:bg-red-700 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
+              >
+                {deletingClass ? 'Deleting...' : 'Yes, delete classroom'}
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowDeleteModal(false)}
+                disabled={deletingClass}
+                className="flex-1 min-h-[44px] px-4 py-2.5 rounded-lg font-bold text-gray-800 bg-gray-200 hover:bg-gray-300 transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

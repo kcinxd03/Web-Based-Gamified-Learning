@@ -38,8 +38,8 @@ const Signup = () => {
   ];
   const days = Array.from({ length: 31 }, (_, i) => i + 1);
   const years = Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - i);
-  const genders = ['Male', 'Female', 'Other', 'Prefer not to say'];
-  const gradeLevels = Array.from({ length: 12 }, (_, i) => i + 1);
+  const genders = ['Male', 'Female'];
+  const gradeLevels = [4, 5, 6];
 
   return (
     <div 
@@ -101,7 +101,7 @@ const Signup = () => {
 
             {/* Birth Date Banner */}
             <div 
-              className="w-full py-3 px-4 rounded-lg mb-4 bg-white border-2 border-black"
+              className="w-full py-3 px-4 rounded-lg mb-4 bg-green-700 border-2 border-black"
             >
               <label 
                 className="block font-bold text-xl text-center"

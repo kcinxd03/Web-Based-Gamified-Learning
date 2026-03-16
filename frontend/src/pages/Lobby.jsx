@@ -79,6 +79,8 @@ const Lobby = () => {
   const [error, setError] = useState(null);
   const [restarting, setRestarting] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deletingClass, setDeletingClass] = useState(false);
 
   const isTeacher = user?.accountType === 'TEACHER';
 
@@ -284,11 +286,7 @@ const Lobby = () => {
       navigate(classData ? '/create-quiz' : '/my-class', classData ? { state: { classData } } : {});
     } else if (navItem === 'delete-classroom') {
       if (!classData?.id) return;
-      if (!window.confirm(`Are you sure you want to delete this classroom? This cannot be undone.`)) return;
-      classAPI.deleteClass(classData.id).then(() => {
-        alert('Classroom deleted successfully');
-        navigate('/my-class');
-      }).catch((e) => alert(e.response?.data?.message || 'Failed to delete classroom.'));
+      setShowDeleteModal(true);
     } else if (navItem === 'leave-classroom') {
       navigate('/my-class');
     }
@@ -355,6 +353,22 @@ const Lobby = () => {
     }
   };
 
+  const confirmDeleteClassroom = async () => {
+    if (!classData?.id) return;
+    setDeletingClass(true);
+    try {
+      await classAPI.deleteClass(classData.id);
+      setShowDeleteModal(false);
+      navigate('/my-class', { replace: true });
+    } catch (e) {
+      console.error('Delete classroom error:', e);
+      setShowDeleteModal(false);
+      // Optional: you could show a non-blocking error banner here instead of alert
+    } finally {
+      setDeletingClass(false);
+    }
+  };
+
   const handleEditGame = () => {
     const sid = session?.id ?? session?._id;
     if (!sid || !isTeacher || !quizData || !classData) return;
@@ -368,13 +382,22 @@ const Lobby = () => {
     });
   };
 
-  // Teacher as host in first slot; use current user's avatar when they are the teacher so host matches sidebar
+  // Teacher as host in first slot.
+  // If the current user is the teacher, always use their auth avatar so the host card matches the sidebar/profile.
   const teacherData = session?.teacher || classData?.teacher;
   const hostSlot = teacherData
     ? {
         id: teacherData._id ?? teacherData.id ?? 'host',
-        name: isTeacher && user ? [user.firstName, user.lastName].filter(Boolean).join(' ') || user.name : [teacherData.firstName, teacherData.lastName].filter(Boolean).join(' ') || classData?.teacherName || 'Host',
-        avatar: isTeacher && user?.profilePicture ? user.profilePicture : (teacherData.profilePicture ?? teacherData.avatar),
+        name:
+          isTeacher && user
+            ? [user.firstName, user.lastName].filter(Boolean).join(' ') || user.name || 'Host'
+            : [teacherData.firstName, teacherData.lastName].filter(Boolean).join(' ') ||
+              classData?.teacherName ||
+              'Host',
+        avatar: isTeacher
+          ? user?.profilePicture || getDefaultAvatarByGender(user?.gender)
+          : teacherData.profilePicture || teacherData.avatar || getDefaultAvatarByGender(teacherData.gender),
+        gender: isTeacher ? user?.gender : teacherData.gender,
         isHost: true
       }
     : null;
@@ -533,10 +556,6 @@ const Lobby = () => {
                 <FaUsers className="text-white flex-shrink-0" size={18} />
                 <span className="text-white font-bold text-sm sm:text-base text-left">{t('classroom_classmates')}</span>
               </button>
-              <button onClick={() => handleNavClick('leave-classroom')} className="w-full flex items-center gap-2 sm:gap-3 px-3 py-2.5 sm:px-4 sm:py-3 rounded-lg transition-colors hover:bg-red-600 mt-2 sm:mt-4 justify-start touch-manipulation min-h-[44px]">
-                <FaSignOutAlt className="text-white flex-shrink-0" size={18} />
-                <span className="text-white font-bold text-sm sm:text-base text-left">{t('classroom_leaveClassroom')}</span>
-              </button>
             </>
           )}
         </nav>
@@ -664,6 +683,40 @@ const Lobby = () => {
           </div>
         </div>
       </div>
+
+      {/* Delete classroom confirmation modal (teacher only) */}
+      {isTeacher && showDeleteModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
+          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-5 sm:p-6 border-2 border-red-300">
+            <h2 className="text-lg sm:text-xl font-bold mb-3 text-gray-900">
+              Delete Classroom?
+            </h2>
+            <p className="text-sm sm:text-base text-gray-700 mb-4">
+              This will permanently delete this classroom and all of its associated data
+              (classes, game history, and leaderboards). Students will no longer have access.
+              This action cannot be undone.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-2 mt-2">
+              <button
+                type="button"
+                onClick={confirmDeleteClassroom}
+                disabled={deletingClass}
+                className="flex-1 min-h-[44px] px-4 py-2.5 rounded-lg font-bold text-white bg-red-600 hover:bg-red-700 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
+              >
+                {deletingClass ? 'Deleting...' : 'Yes, delete classroom'}
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowDeleteModal(false)}
+                disabled={deletingClass}
+                className="flex-1 min-h-[44px] px-4 py-2.5 rounded-lg font-bold text-gray-800 bg-gray-200 hover:bg-gray-300 transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

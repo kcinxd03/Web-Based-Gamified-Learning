@@ -18,14 +18,18 @@ const Admin = () => {
     lastName: '',
     email: '',
     password: '',
-    gender: ''
+    gender: '',
+    gradeLevel: '',
+    section: ''
   });
   const [editFormData, setEditFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
     password: '',
-    gender: ''
+    gender: '',
+    gradeLevel: '',
+    section: ''
   });
   const [deleteConfirm, setDeleteConfirm] = useState(null);
 
@@ -80,7 +84,9 @@ const Admin = () => {
         lastName: '',
         email: '',
         password: '',
-        gender: ''
+        gender: '',
+        gradeLevel: '',
+        section: ''
       });
       setShowCreateForm(false);
 
@@ -101,7 +107,9 @@ const Admin = () => {
       lastName: teacher.lastName || '',
       email: teacher.email || '',
       password: '',
-      gender: teacher.gender || ''
+      gender: teacher.gender || '',
+      gradeLevel: teacher.gradeLevel || '',
+      section: teacher.section || ''
     });
     setError('');
     setSuccessMessage('');
@@ -124,7 +132,9 @@ const Admin = () => {
         firstName: editFormData.firstName,
         lastName: editFormData.lastName,
         email: editFormData.email,
-        gender: editFormData.gender
+        gender: editFormData.gender,
+        gradeLevel: editFormData.gradeLevel,
+        section: editFormData.section
       };
       if (editFormData.password && editFormData.password.trim()) {
         payload.password = editFormData.password;
@@ -170,7 +180,7 @@ const Admin = () => {
     navigate('/login');
   };
 
-  const genders = ['Male', 'Female', 'Other', 'Prefer not to say'];
+  const genders = ['Male', 'Female'];
 
   return (
     <div 
@@ -294,6 +304,30 @@ const Admin = () => {
                     <option key={gender} value={gender}>{gender}</option>
                   ))}
                 </select>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block font-bold mb-2 text-gray-700">Grade Level</label>
+                  <input
+                    type="text"
+                    name="gradeLevel"
+                    value={formData.gradeLevel}
+                    onChange={handleChange}
+                    placeholder="e.g. 4, 5, 6"
+                    className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-green-600"
+                  />
+                </div>
+                <div>
+                  <label className="block font-bold mb-2 text-gray-700">Section</label>
+                  <input
+                    type="text"
+                    name="section"
+                    value={formData.section}
+                    onChange={handleChange}
+                    placeholder="e.g. A, B, C"
+                    className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-green-600"
+                  />
+                </div>
               </div>
               <button
                 type="submit"
@@ -470,6 +504,30 @@ const Admin = () => {
                       <option key={g} value={g}>{g}</option>
                     ))}
                   </select>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block font-bold mb-2 text-gray-700">Grade Level</label>
+                    <input
+                      type="text"
+                      name="gradeLevel"
+                      value={editFormData.gradeLevel}
+                      onChange={handleEditChange}
+                      placeholder="e.g. 4, 5, 6"
+                      className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-green-600"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-bold mb-2 text-gray-700">Section</label>
+                    <input
+                      type="text"
+                      name="section"
+                      value={editFormData.section}
+                      onChange={handleEditChange}
+                      placeholder="e.g. A, B, C"
+                      className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-green-600"
+                    />
+                  </div>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-2 pt-2">
                   <button

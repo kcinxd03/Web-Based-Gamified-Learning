@@ -38,6 +38,8 @@ const CreateQuiz = () => {
   const [error, setError] = useState(null);
   const [editingQuizId, setEditingQuizId] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deletingClass, setDeletingClass] = useState(false);
 
   // Get class data and edit quiz id from navigation state
   useEffect(() => {
@@ -162,6 +164,9 @@ const CreateQuiz = () => {
       navigate('/classroom', { state: { classData, activeNav: 'my-quizzes' } });
     } else if (navItem === 'students' || navItem === 'classmates') {
       navigate('/classroom', { state: { classData, activeNav: navItem === 'students' ? 'students' : 'classmates' } });
+    } else if (navItem === 'delete-classroom') {
+      if (!classData?.id && !classData?._id) return;
+      setShowDeleteModal(true);
     }
   };
 
@@ -188,9 +193,24 @@ const CreateQuiz = () => {
   };
 
   const handleDeleteClassroom = () => {
-    // TODO: Implement delete classroom logic
-    console.log('Delete classroom');
-    navigate('/my-class');
+    if (!classData?.id && !classData?._id) return;
+    setShowDeleteModal(true);
+  };
+
+  const confirmDeleteClassroom = async () => {
+    const classId = classData?.id ?? classData?._id;
+    if (!classId) return;
+    setDeletingClass(true);
+    try {
+      await classAPI.deleteClass(classId);
+      setShowDeleteModal(false);
+      navigate('/my-class', { replace: true });
+    } catch (err) {
+      console.error('Error deleting classroom:', err);
+      setShowDeleteModal(false);
+    } finally {
+      setDeletingClass(false);
+    }
   };
 
   const handleInputChange = (e) => {
@@ -731,7 +751,7 @@ const CreateQuiz = () => {
                         className="w-full px-3 sm:px-3.5 py-2 rounded-lg sm:rounded-[10px] border text-sm sm:text-base transition-all duration-200 focus:outline-none box-border min-h-[40px]"
                         style={{ borderColor: CQ_BORDER, color: CQ_TEXT, backgroundColor: CQ_WHITE }}
                       >
-                        <option value="qanda">{t('createQuiz_qanda')}</option>
+                        <option value="qanda">Multiple Choice</option>
                         <option value="truefalse">{t('createQuiz_trueFalse')}</option>
                         <option value="fillblank">{t('createQuiz_fillBlank')}</option>
                       </select>
@@ -905,6 +925,39 @@ const CreateQuiz = () => {
           </form>
         </div>
       </div>
+      {/* Delete classroom confirmation modal (teacher only) */}
+      {user?.accountType === 'TEACHER' && showDeleteModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
+          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-5 sm:p-6 border-2 border-red-300">
+            <h2 className="text-lg sm:text-xl font-bold mb-3 text-gray-900">
+              Delete Classroom?
+            </h2>
+            <p className="text-sm sm:text-base text-gray-700 mb-4">
+              This will permanently delete this classroom and all of its associated data
+              (quizzes, game sessions, and leaderboards). Students will no longer have access.
+              This action cannot be undone.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-2 mt-2">
+              <button
+                type="button"
+                onClick={confirmDeleteClassroom}
+                disabled={deletingClass}
+                className="flex-1 min-h-[44px] px-4 py-2.5 rounded-lg font-bold text-white bg-red-600 hover:bg-red-700 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
+              >
+                {deletingClass ? 'Deleting...' : 'Yes, delete classroom'}
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowDeleteModal(false)}
+                disabled={deletingClass}
+                className="flex-1 min-h-[44px] px-4 py-2.5 rounded-lg font-bold text-gray-800 bg-gray-200 hover:bg-gray-300 transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

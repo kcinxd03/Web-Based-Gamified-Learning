@@ -7,12 +7,10 @@ import {
   FaDoorOpen,
   FaChalkboardTeacher,
 } from "react-icons/fa";
-import { useAuth } from "../context/AuthContext";
 import { useLanguage } from "../context/LanguageContext";
 
 const StudentHome = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
   const { t } = useLanguage();
   const handleProfileClick = () => {
     navigate("/set-profile");
