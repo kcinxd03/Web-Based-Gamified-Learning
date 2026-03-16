@@ -33,7 +33,7 @@ export const createTeacher = async (req, res) => {
       return res.status(403).json({ message: 'Access denied. Admin only.' });
     }
 
-    const { firstName, lastName, email, password, gender } = req.body;
+    const { firstName, lastName, email, password, gender, gradeLevel, section } = req.body;
 
     if (!firstName || !lastName || !email || !password || !gender) {
       return res.status(400).json({ 
@@ -67,6 +67,8 @@ export const createTeacher = async (req, res) => {
       email: email.toLowerCase().trim(),
       password,
       gender: gender.trim(),
+      gradeLevel: gradeLevel ? String(gradeLevel).trim() : '',
+      section: section ? String(section).trim() : '',
       birthDate: {
         month: '',
         day: '',
@@ -94,6 +96,8 @@ export const createTeacher = async (req, res) => {
         lastName: teacher.lastName,
         email: teacher.email,
         gender: teacher.gender,
+        gradeLevel: teacher.gradeLevel,
+        section: teacher.section,
         accountType: 'TEACHER',
         profilePicture: teacher.profilePicture || '',
         createdAt: teacher.createdAt
@@ -134,7 +138,7 @@ export const updateTeacher = async (req, res) => {
     }
 
     const { id } = req.params;
-    const { firstName, lastName, email, gender, password } = req.body;
+    const { firstName, lastName, email, gender, password, gradeLevel, section } = req.body;
 
     if (!id || !mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: 'Invalid teacher ID' });
@@ -175,6 +179,12 @@ export const updateTeacher = async (req, res) => {
       }
       teacher.gender = gender;
     }
+    if (gradeLevel !== undefined) {
+      teacher.gradeLevel = gradeLevel !== null ? String(gradeLevel).trim() : '';
+    }
+    if (section !== undefined) {
+      teacher.section = section !== null ? String(section).trim() : '';
+    }
     if (password !== undefined && password !== '') {
       if (String(password).length < 6) {
         return res.status(400).json({ message: 'Password must be at least 6 characters' });
@@ -192,6 +202,8 @@ export const updateTeacher = async (req, res) => {
         lastName: teacher.lastName,
         email: teacher.email,
         gender: teacher.gender,
+        gradeLevel: teacher.gradeLevel,
+        section: teacher.section,
         accountType: 'TEACHER',
         profilePicture: teacher.profilePicture || '',
         createdAt: teacher.createdAt
